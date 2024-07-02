@@ -43,9 +43,9 @@ def delete_from_db(table, id_column, entity_id, entity):
         else:
             conn.commit()
             message = f"{entity.capitalize()} com ID {entity_id} removido com sucesso."
-    except:
+    except Exception as e:
         conn.rollback()
-        message = f"Erro ao remover {entity}"
+        message = f"Erro ao remover {entity}: {e}"
     finally:
         cursor.close()
         conn.close()
