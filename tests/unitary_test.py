@@ -211,7 +211,7 @@ def test_get_db_connection():
 
 def test_index(client):
     response = client.get('/')
-    assert response.status_code == 500
+    assert response.status_code == 200
 
 def test_get_eleitos(client):
     response = client.get('/candidaturas/eleitos')
@@ -231,7 +231,7 @@ def test_delete_entity(client):
         'id': '493.016.568-76' 
     }
     response = client.post('/delete', data=data)
-    assert response.status_code == 500
+    assert response.status_code == 200
 
 def test_inserir(client):
         cursor_mock = MagicMock()
