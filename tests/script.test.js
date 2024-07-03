@@ -29,7 +29,6 @@ describe('Testando funções de formulário', () => {
         `);
         document = dom.window.document;
 
-        // Adiciona os métodos ao objeto global
         global.document = document;
     });
 

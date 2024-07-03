@@ -61,24 +61,6 @@ function formatarCNPJ(input) {
     input.value = cnpj;
 }
 
-document.getElementById('entity').addEventListener('change', function() {
-    let entityIdInput = document.getElementById('id');
-    entityIdInput.value = '';
-if (this.value === 'individuo') {
-        entityIdInput.placeholder = "Digite o CPF";
-        entityIdInput.oninput = function() {
-            formatarCPF(this);
-        };
-    }else if (this.value === 'empresa') {
-        entityIdInput.placeholder = "Digite o CNPJ";
-        entityIdInput.oninput = function() {
-            formatarCNPJ(this);
-        };
-    }
-    else
-        entityIdInput.placeholder = "";
-});
-
 module.exports = {
     showFields,
     toggleDoadorFields,
