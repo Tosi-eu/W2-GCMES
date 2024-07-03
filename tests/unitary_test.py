@@ -3,7 +3,7 @@ import pytest
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from app import app, delete_from_db
+from app import app, delete_from_db, get_db_connection
 from misc import handle_candidatura_insertion, handle_cargo_insertion, handle_empresa_insertion, handle_equipeapoio_insertion, handle_individuo_insertion, handle_partido_insertion, handle_pleito_insertion, handle_processojudicial_insertion, handle_programa_partido_insertion
 from misc import is_valid_entity, is_valid_id, get_invalid_message, get_table_and_column, other_candidatura_exists, candidatura_exists
 
@@ -203,3 +203,57 @@ def test_handle_candidatura_insertion():
     handle_candidatura_insertion(cursor_mock, form_data)
     cursor_mock.execute.assert_called_once()
     
+def test_get_db_connection():
+    conn = get_db_connection()
+    assert conn is not None, "Connection to the database should be established"
+    conn.close()
+
+def test_index(client):
+    response = client.get('/')
+    assert response.status_code == 200
+
+def test_get_eleitos(client):
+    response = client.get('/candidaturas/eleitos')
+    assert response.status_code == 200
+
+def test_list_candidaturas(client):
+    response = client.get('/candidaturas')
+    assert response.status_code == 200
+
+def test_get_ficha_limpa(client):
+    response = client.get('/candidatos/ficha-limpa')
+    assert response.status_code == 200
+
+def test_delete_entity(client):
+    data = {
+        'entity': 'candidato',
+        'id': '493.016.568-76' 
+    }
+    response = client.post('/delete', data=data)
+    assert response.status_code == 200
+
+def test_inserir(client):
+    data = {
+        'entity': 'pleito',
+        'nome': 'teste',
+        'quantVotos': 12000
+    }
+    response = client.post('/inserir', data=data)
+    assert response.status_code == 200
+
+def test_doacoes(client):
+    # Testando inserção de doações com um exemplo válido
+    data_pf = {
+        'doador_tipo': 'Físico',
+        'id': '493.016.568-76'
+    }
+    response_pf = client.post('/doacoes', data=data_pf)
+    assert response_pf.status_code == 200
+
+def test_doacoes_pj(client):
+    data_pj = {
+        'doador_tipo': 'Físico',
+        'id': '11.111.111/1111-11'
+    }
+    response_pj = client.post('/doacoes', data=data_pj)
+    assert response_pj.status_code == 200
