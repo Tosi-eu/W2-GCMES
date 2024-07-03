@@ -5,7 +5,7 @@ global.TextDecoder = TextDecoder;
 const { JSDOM } = require('jsdom');
 
 // Supondo que suas funções estejam em um arquivo chamado `index.js`
-const { showFields, toggleDoadorFields, toggleForm, formatarCPF, formatarCNPJ } = require('./script');
+const { showFields, toggleDoadorFields, toggleForm, formatarCPF, formatarCNPJ } = require('../static/script.js');
 
 describe('Testando funções de formulário', () => {
     let dom;
