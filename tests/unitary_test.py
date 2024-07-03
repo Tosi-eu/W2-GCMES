@@ -3,7 +3,7 @@ import pytest
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from app import app, delete_from_db
+from app import app, delete_from_db, get_db_connection
 from misc import handle_candidatura_insertion, handle_cargo_insertion, handle_empresa_insertion, handle_equipeapoio_insertion, handle_individuo_insertion, handle_partido_insertion, handle_pleito_insertion, handle_processojudicial_insertion, handle_programa_partido_insertion
 from misc import is_valid_entity, is_valid_id, get_invalid_message, get_table_and_column, other_candidatura_exists, candidatura_exists
 
@@ -203,3 +203,44 @@ def test_handle_candidatura_insertion():
     handle_candidatura_insertion(cursor_mock, form_data)
     cursor_mock.execute.assert_called_once()
     
+def test_get_db_connection():
+    with patch('app.get_db_connection', return_value=MagicMock()):
+        conn = get_db_connection()
+    
+        assert conn is None
+
+def test_index(client):
+    response = client.get('/')
+    assert response.status_code == 200
+
+def test_get_eleitos(client):
+    response = client.get('/candidaturas/eleitos')
+    assert response.status_code == 500
+
+def test_list_candidaturas(client):
+    response = client.get('/candidaturas')
+    assert response.status_code == 500
+
+def test_get_ficha_limpa(client):
+    response = client.get('/candidatos/ficha-limpa')
+    assert response.status_code == 500
+
+def test_delete_entity(client):
+    data = {
+        'entity': 'candidato',
+        'id': '493.016.568-76' 
+    }
+    response = client.post('/delete', data=data)
+    assert response.status_code == 200
+
+def test_inserir(client):
+        cursor_mock = MagicMock()
+        data = {
+            'entity': 'pleito',
+            'Cod_Pleito': 15000,
+            'qtdVotos': 1102
+        }
+        response = client.post('/inserir', data=data)
+        assert response.status_code == 500
+        handle_pleito_insertion(cursor_mock, data)
+        cursor_mock.execute.assert_called_once()
