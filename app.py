@@ -44,9 +44,9 @@ def delete_from_db(table, id_column, entity_id, entity):
         else:
             conn.commit()
             message = f"{entity.capitalize()} com ID {entity_id} removido com sucesso."
-    except Exception as e:
+    except:
         conn.rollback()
-        message = f"Erro ao remover {entity}: {e}"
+        message = f"Erro ao remover {entity}"
     finally:
         cursor.close()
         conn.close()
@@ -197,7 +197,7 @@ def get_ficha_limpa():
         })
     return render_template('ficha_limpa.html', candidatos=result)
 
-@app.route('/delete',methods=['GET', 'POST'])
+@app.route('/delete',methods=METHODS)
 def delete_entity():
     if request.method == 'POST':
         entity = request.form['entity'].lower()
@@ -323,5 +323,6 @@ def doacoes():
 
 if __name__ == '__main__':
     csrf.init_app(app)
-    app.run(debug=True)
+    app.run(debug=getenv("DEBUG"))
+
 

@@ -206,7 +206,6 @@ def test_handle_candidatura_insertion():
 def test_get_db_connection():
     with patch('app.get_db_connection', return_value=MagicMock()):
         conn = get_db_connection()
-    
         assert conn is None
 
 def test_index(client):

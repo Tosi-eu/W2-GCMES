@@ -153,3 +153,4 @@ def handle_processojudicial_insertion(cursor, form):
         VALUES (%s, %s, %s, %s, %s, %s)
     """
     cursor.execute(query, (codigo_processo, codigo_individuo, data_inicio, julgado, data_termino, procedente))
+    
