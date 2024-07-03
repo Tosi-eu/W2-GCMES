@@ -204,9 +204,8 @@ def test_handle_candidatura_insertion():
     cursor_mock.execute.assert_called_once()
     
 def test_get_db_connection():
-    with patch('app.get_db_connection', return_value=MagicMock()) as mock_get_db_connection:
+    with patch('app.get_db_connection', return_value=MagicMock()):
         conn = get_db_connection()
-    
         assert conn is None
 
 def test_index(client):
