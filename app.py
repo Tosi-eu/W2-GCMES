@@ -197,7 +197,7 @@ def get_ficha_limpa():
         })
     return render_template('ficha_limpa.html', candidatos=result)
 
-@app.route('/delete',methods=METHODS)
+@app.route('/delete',methods=['GET', 'POST'])
 def delete_entity():
     if request.method == 'POST':
         entity = request.form['entity'].lower()
@@ -324,4 +324,5 @@ def doacoes():
 if __name__ == '__main__':
     csrf.init_app(app)
     app.run(debug=getenv("DEBUG"))
+
 
