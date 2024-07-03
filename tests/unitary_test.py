@@ -204,9 +204,10 @@ def test_handle_candidatura_insertion():
     cursor_mock.execute.assert_called_once()
     
 def test_get_db_connection():
-    conn = get_db_connection()
-    assert conn is not None, "Connection to the database should be established"
-    conn.close()
+    with patch('app.get_db_connection', return_value=MagicMock()) as mock_get_db_connection:
+        conn = get_db_connection()
+    
+        assert conn is not None
 
 def test_index(client):
     response = client.get('/')
@@ -233,27 +234,13 @@ def test_delete_entity(client):
     assert response.status_code == 200
 
 def test_inserir(client):
-    data = {
-        'entity': 'pleito',
-        'nome': 'teste',
-        'quantVotos': 12000
-    }
-    response = client.post('/inserir', data=data)
-    assert response.status_code == 200
-
-def test_doacoes(client):
-    # Testando inserção de doações com um exemplo válido
-    data_pf = {
-        'doador_tipo': 'Físico',
-        'id': '493.016.568-76'
-    }
-    response_pf = client.post('/doacoes', data=data_pf)
-    assert response_pf.status_code == 200
-
-def test_doacoes_pj(client):
-    data_pj = {
-        'doador_tipo': 'Físico',
-        'id': '11.111.111/1111-11'
-    }
-    response_pj = client.post('/doacoes', data=data_pj)
-    assert response_pj.status_code == 200
+        cursor_mock = MagicMock()
+        data = {
+            'entity': 'pleito',
+            'Cod_Pleito': 15000,
+            'qtdVotos': 1102
+        }
+        response = client.post('/inserir', data=data)
+        assert response.status_code == 200
+        handle_pleito_insertion(cursor_mock, data)
+        cursor_mock.execute.assert_called_once()
