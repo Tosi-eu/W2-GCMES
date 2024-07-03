@@ -24,6 +24,14 @@ jobs:
         run: pip install tox python-dotenv psycopg2 flask pytest pytest-cov Flask-WTF
       - name: Run tox
         run: tox -e py
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+      - name: Install Node.js dependencies
+        run: npm install
+      - name: Run JavaScript tests
+        run: npm test
       - name: Sonar Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:

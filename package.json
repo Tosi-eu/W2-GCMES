@@ -1,0 +1,21 @@
+{
+  "name": "w2-gcmes",
+  "version": "1.0.0",
+  "description": "Nome: Gerência de Configuração, Manutenção e Evolução de Software(GCMES)\r Docente: Prof° Dr. Lina Garcés",
+  "main": "jest.config.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-environment-jsdom-global": "^4.0.0",
+    "jsdom": "^24.1.0"
+  }
+}

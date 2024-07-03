@@ -78,3 +78,11 @@ if (this.value === 'individuo') {
     else
         entityIdInput.placeholder = "";
 });
+
+module.exports = {
+    showFields,
+    toggleDoadorFields,
+    toggleForm,
+    formatarCPF,
+    formatarCNPJ,
+  };
