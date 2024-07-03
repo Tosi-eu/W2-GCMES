@@ -197,7 +197,7 @@ def get_ficha_limpa():
         })
     return render_template('ficha_limpa.html', candidatos=result)
 
-@app.route('/delete',methods=['GET', 'POST'])
+@app.route('/delete',methods=METHODS)
 def delete_entity():
     if request.method == 'POST':
         entity = request.form['entity'].lower()
