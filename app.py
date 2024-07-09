@@ -55,7 +55,7 @@ def delete_from_db(table, id_column, entity_id, entity):
 message = "Dados inseridos com sucesso!"
 
 # Rota principal
-@app.route('/')
+@app.route('/docs')
 def index():
     return render_template('index.html')
 
@@ -94,7 +94,7 @@ def get_eleitos():
         })
     return render_template('eleitos.html', candidaturas=result)
 
-@app.route('/candidaturas', methods=['GET'])
+@app.route('/docs/candidaturas', methods=['GET'])
 def list_candidaturas():
     try:
         conn = get_db_connection()
